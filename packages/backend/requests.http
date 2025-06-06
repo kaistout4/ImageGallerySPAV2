@@ -1,0 +1,111 @@
+### Get all images WITHOUT Authorization (should return 401)
+GET http://localhost:3000/api/images
+
+### Get all images w/ Authorization
+GET http://localhost:3000/api/images
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3R1c2VyIiwiaWF0IjoxNzQ5MjQ5MDM0LCJleHAiOjE3NDkzMzU0MzR9.I4srmHixaizdaaQzE7NNzEMvkN_RsMs41AdKakD7kUw
+
+### Search images by name
+GET http://localhost:3000/api/images/search?q=shiba
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3R1c2VyIiwiaWF0IjoxNzQ5MjQ5MDM0LCJleHAiOjE3NDkzMzU0MzR9.I4srmHixaizdaaQzE7NNzEMvkN_RsMs41AdKakD7kUw
+
+### Search images by name
+GET http://localhost:3000/api/images/search?q=blue
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3R1c2VyIiwiaWF0IjoxNzQ5MjQ5MDM0LCJleHAiOjE3NDkzMzU0MzR9.I4srmHixaizdaaQzE7NNzEMvkN_RsMs41AdKakD7kUw
+
+### Update image name
+PUT http://localhost:3000/api/images/683a93e0e00419049230c968
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3R1c2VyIiwiaWF0IjoxNzQ5MjQ5MDM0LCJleHAiOjE3NDkzMzU0MzR9.I4srmHixaizdaaQzE7NNzEMvkN_RsMs41AdKakD7kUw
+
+{
+  "name": "Updated Blue Merle Dog"
+}
+
+### Update another image name
+PUT http://localhost:3000/api/images/683a93e0e00419049230c969
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3R1c2VyIiwiaWF0IjoxNzQ5MjQ5MDM0LCJleHAiOjE3NDkzMzU0MzR9.I4srmHixaizdaaQzE7NNzEMvkN_RsMs41AdKakD7kUw
+
+{
+  "name": "Beautiful Siberian Huskies"
+}
+
+### Test 400 Bad Request - Missing name field
+PUT http://localhost:3000/api/images/507f1f77bcf86cd799439011
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3R1c2VyIiwiaWF0IjoxNzQ5MjQ5MDM0LCJleHAiOjE3NDkzMzU0MzR9.I4srmHixaizdaaQzE7NNzEMvkN_RsMs41AdKakD7kUw
+
+{
+  "title": "This should fail"
+}
+
+### Test 400 Bad Request - Name is not a string
+PUT http://localhost:3000/api/images/507f1f77bcf86cd799439011
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3R1c2VyIiwiaWF0IjoxNzQ5MjQ5MDM0LCJleHAiOjE3NDkzMzU0MzR9.I4srmHixaizdaaQzE7NNzEMvkN_RsMs41AdKakD7kUw
+
+{
+  "name": 12345
+}
+
+### Test 404 Not Found - Invalid ObjectId format
+PUT http://localhost:3000/api/images/invalid-id
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3R1c2VyIiwiaWF0IjoxNzQ5MjQ5MDM0LCJleHAiOjE3NDkzMzU0MzR9.I4srmHixaizdaaQzE7NNzEMvkN_RsMs41AdKakD7kUw
+
+
+{
+  "name": "This should fail"
+}
+
+### Test 404 Not Found - Valid ObjectId but image doesn't exist
+PUT http://localhost:3000/api/images/507f1f77bcf86cd799439011
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3R1c2VyIiwiaWF0IjoxNzQ5MjQ5MDM0LCJleHAiOjE3NDkzMzU0MzR9.I4srmHixaizdaaQzE7NNzEMvkN_RsMs41AdKakD7kUw
+
+{
+  "name": "This should fail"
+}
+
+### Test 422 Unprocessable Entity - Name too long (over 100 characters)
+PUT http://localhost:3000/api/images/507f1f77bcf86cd799439011
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3R1c2VyIiwiaWF0IjoxNzQ5MjQ5MDM0LCJleHAiOjE3NDkzMzU0MzR9.I4srmHixaizdaaQzE7NNzEMvkN_RsMs41AdKakD7kUw
+
+{
+  "name": "This is an extremely long image name that exceeds the maximum allowed length of 100 characters and should trigger a 422 Unprocessable Entity error response from the server"
+}
+
+### Update image w/o Auth (should fail - 401)
+PUT http://localhost:3000/api/images/683a93e0e00419049230c968
+Content-Type: application/json
+
+{
+  "name": "Trying to update without authentication"
+}
+
+### Update image as owner "chunkylover23" (should succeed - 204)
+PUT http://localhost:3000/api/images/683a93e0e00419049230c968
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImNodW5reWxvdmVyMjMiLCJpYXQiOjE3NDkyNTI0MzEsImV4cCI6MTc0OTMzODgzMX0.lhIOHtIWfoTQTii_SDrKnu-rr91-kT-F-bc1D0tPPcM
+
+{
+  "name": "Updated by owner chunkylover23"
+}
+
+### Update "fluffycoat" image as "chunkylover23" (should fail - 403)
+PUT http://localhost:3000/api/images/683a93e0e00419049230c96c
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImNodW5reWxvdmVyMjMiLCJpYXQiOjE3NDkyNTI0MzEsImV4cCI6MTc0OTMzODgzMX0.lhIOHtIWfoTQTii_SDrKnu-rr91-kT-F-bc1D0tPPcM
+
+{
+  "name": "Trying to update fluffycoat image"
+}
+
+### A second example.  Each request must be delimited by a triple hash
+POST http://localhost:3000/api/test
+Content-Type: application/json # Content-Type header is a must if you're sending JSON
+# Request body separated from headers by newline
+
+{ "a": 1, "b": 2 }

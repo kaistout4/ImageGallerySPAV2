@@ -1,0 +1,83 @@
+### Successful user registration - 201 Created
+POST http://localhost:3000/auth/register
+Content-Type: application/json
+
+{ "username": "testuser", "password": "password" }
+
+### Another successful registration
+POST http://localhost:3000/auth/register
+Content-Type: application/json
+
+{ "username": "johnsmith", "password": "password" }
+
+### Test 409 Conflict - Username already taken
+POST http://localhost:3000/auth/register
+Content-Type: application/json
+
+{ "username": "testuser", "password": "differentpassword" }
+
+### Test 400 Bad Request - Missing password
+POST http://localhost:3000/auth/register
+Content-Type: application/json
+
+{ "username": "missingpass" }
+
+### Test 400 Bad Request - Missing username
+POST http://localhost:3000/auth/register
+Content-Type: application/json
+
+{ "password": "password" }
+
+### Test 400 Bad Request - Empty body
+POST http://localhost:3000/auth/register
+Content-Type: application/json
+
+{}
+
+### Login - Successful login
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{ "username": "testuser", "password": "password" }
+
+### Login - Incorrect password
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{ "username": "testuser", "password": "wrongpassword" }
+
+### Login - User doesn't exist
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{ "username": "randomusername", "password": "password" }
+
+### Login - Missing username
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{ "password": "password" }
+
+### Login - Missing password
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{ "username": "testuser" }
+
+### Login - Empty body
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{}
+
+### Register user "chunkylover23"
+POST http://localhost:3000/auth/register
+Content-Type: application/json
+
+{ "username": "chunkylover23", "password": "password" }
+
+### Login as "chunkylover23"
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{ "username": "chunkylover23", "password": "password" }
